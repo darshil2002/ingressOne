@@ -10,10 +10,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 
 import { HttpClientModule } from '@angular/common/http';
+import { CrudComponent } from './crud/crud.component';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    CrudComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject ,Subject} from 'rxjs';
+import { BehaviorSubject ,Observable,Subject} from 'rxjs';
 import { user, userMainData } from './common.interface';
 import { pluck } from 'rxjs/operators';
 
@@ -19,7 +19,7 @@ export class MainServiceService {
   constructor(private http: HttpClient) {
     this.fetchData();
   }
-
+// for getting the data in comp 2
   fetchData() {
     //sending actual data | by removing the message and success status 
     this.http.get<user>(this.userUrl).subscribe((res) => {
@@ -30,5 +30,18 @@ export class MainServiceService {
   getData() {
     return this.dataSubject.asObservable();
   }
+// comp two 2 here
 
+
+// login comp" logic  
+
+ login(email: string, password: string): Observable<any> {
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    
+    return this.http.post<any>(this.loginUrl, formData);
+  }
+// login comp" logic end here
 }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MainServiceService } from '../main-service.service';
 import { user, userMainData } from '../common.interface';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,16 +15,37 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder,private mainService:MainServiceService) {
-    // Initialize the form and add form controls
+  constructor(private fb: FormBuilder,
+              private mainService:MainServiceService,
+              private router: Router
+              ) {
+    // Initialize the form 
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
 
   loginButtonClicked(){
     console.log(this.loginForm.value)
+
+    const email = this.loginForm.get('email')?.value;
+    const password = this.loginForm.get('password')?.value;
+
+    this.mainService.login(email, password).subscribe((response) => {
+      console.log('API response:', response); 
+      if(response.success){
+        // alert('right password')
+        this.router.navigate(['/crud']);
+      }
+      else{
+        alert('wrong password !')
+      }
+    },
+    (error) => {
+      alert('Invalid UserName or Password'); 
+    }
+    );
   }
 
   ngOnInit() {
