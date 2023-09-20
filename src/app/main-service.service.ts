@@ -11,13 +11,14 @@ export class MainServiceService {
 
   private userUrl = 'http://test.ultim8e.net/api/clients';
   private dataSubject = new Subject<userMainData[]>();
-
+  private authToken;
   private loginUrl = 'http://test.ultim8e.net/api/auth/login';
 
   mainData!:user[];
 
   constructor(private http: HttpClient) {
     this.fetchData();
+    this.authToken = localStorage.getItem('authToken');
   }
 // for getting the data in comp 2
   fetchData() {
@@ -44,4 +45,31 @@ export class MainServiceService {
     return this.http.post<any>(this.loginUrl, formData);
   }
 // login comp" logic end here
+
+// post method 
+postEmployee(data:any):Observable<any>{
+  // this.getNewArray()
+  let myTempDate='1993-09-20'
+  const formData = new FormData();
+
+  // Append key-value pairs for each field in your data
+  formData.append('name', data.name);
+  formData.append('last_name', data.last_name);
+  formData.append('address', data.address);
+  formData.append('birth_date', myTempDate);
+  formData.append('education', data.education);
+  formData.append('email', data.email);
+  formData.append('phone', data.phone);
+
+  if(this.authToken){
+    formData.append('token', this.authToken);
+  }
+  console.log('whole form '+ formData)
+  return this.http.post(this.userUrl,formData);
+}
+updateData(){
+ 
+  this.fetchData()
+}
+// post method finish
 }

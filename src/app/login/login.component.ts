@@ -36,10 +36,8 @@ export class LoginComponent {
       console.log('API response:', response); 
       if(response.success){
         // alert('right password')
+        localStorage.setItem('authToken', response.data.token);
         this.router.navigate(['/crud']);
-      }
-      else{
-        alert('wrong password !')
       }
     },
     (error) => {

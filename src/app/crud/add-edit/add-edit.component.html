@@ -1,0 +1,63 @@
+<div mat-dialog-title>
+    <h1>Client Form</h1>
+  </div>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <div class="row">
+      <mat-form-field>
+        <mat-label> Name:</mat-label>
+        <input matInput type="text" placeholder="darshil" formControlName="name">
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Last Name:</mat-label>
+        <input matInput type="text" placeholder="jadav" formControlName="last_name">
+      </mat-form-field>
+    </div>
+  
+    <div class="row">
+      <mat-form-field>
+        <mat-label>Address:</mat-label>
+        <input matInput type="text" placeholder="Ahmedabad, West" formControlName="address">
+      </mat-form-field>    
+  
+    </div>
+  
+    <div class="row">
+        <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="your DOB" formControlName="birth_date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+  
+    <div class="row">
+    <mat-form-field>  
+      <mat-label>phone</mat-label>
+      <input matInput type="text" formControlName="phone">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>education</mat-label>
+      <input matInput type="text" placeholder="Annual CTC" formControlName="education">
+    </mat-form-field>
+    </div>
+
+
+    <div class="row">
+  
+    <mat-form-field>
+      <mat-label>email</mat-label>
+      <input matInput type="email" placeholder="Annual CTC" formControlName="email">
+    </mat-form-field>
+    </div>
+  </div>
+  
+  <div mat-dialog-actions class="row">
+    <!-- <button mat-raised-button color="primary" type="submit">{{data? 'Update' : 'Save'}}</button> -->
+    <button mat-raised-button color="primary" type="submit">save</button>
+    <button mat-raised-button (click)="closeDailog()" type="button">Cancel</button>
+  </div>
+  </form>
+  
+  
+  
