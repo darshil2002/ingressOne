@@ -57,7 +57,7 @@ postEmployee(data:any):Observable<any>{
   formData.append('last_name', data.last_name);
   formData.append('address', data.address);
   formData.append('birth_date', data.birth_date);
-  formData.append('education', data.education);
+  // formData.append('education', data.education);
   formData.append('email', data.email);
   formData.append('phone', data.phone);
 
@@ -88,8 +88,28 @@ deleteUser(id:string){
 
   //Delete not working because of this blocker 
   // Access to XMLHttpRequest at 'http://test.ultim8e.net/api/clients/18' from origin 'http://localhost:4200' has been blocked by CORS policy: Request header field authorization is not allowed by Access-Control-Allow-Headers in preflight response.
-
   // need to add proxy or have to change some thing in backEnd
   // tried to use extenstion which didn't worked 
 }
+updateUser(data:any,id:string):Observable<any>{
+
+  const formData = new FormData();
+  let tempDate="1993-09-20"
+  formData.append('name', data.name);
+  formData.append('last_name', data.last_name);
+  formData.append('address', data.address);
+  formData.append('birth_date', tempDate);
+  formData.append('email', data.email);
+  formData.append('phone', data.phone);
+
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${this.authToken}`
+  });
+
+  console.log('whole form '+ formData)
+  let postUrl=`${this.userUrl}/${id}`;
+  return this.http.put(postUrl,formData,{ headers });
+  // same for edit / update
+}
+
 }

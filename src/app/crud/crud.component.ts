@@ -39,10 +39,10 @@ export class CrudComponent {
   }
 
   editEmployee(data:any){
-    // this._matDailog.open(AddEditComponent,{data})
+    this._matDailog.open(AddEditComponent,{data})
     console.log(data)
   }
-  deleteEmpoyee(id:any){
+  deleteUser(id:any){
     console.log('id is ', id )
     //api/clients/{client}
 

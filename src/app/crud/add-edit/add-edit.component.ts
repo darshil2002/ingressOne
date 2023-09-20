@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { DialogRef } from '@angular/cdk/dialog';
 import { MainServiceService } from 'src/app/main-service.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-add-edit',
   templateUrl: './add-edit.component.html',
@@ -13,9 +15,9 @@ export class AddEditComponent {
 
   constructor(private formBuilder: FormBuilder,
     private _dailogRef:DialogRef<AddEditComponent>,
-    private mainServ:MainServiceService
+    private mainServ:MainServiceService,
+    @Inject(MAT_DIALOG_DATA) public data: any
     ){}
-    // @Inject(MAT_DIALOG_DATA) public data: any
 
     formatDate(inputDate: any) {
       // console.log('input date is', inputDate);
@@ -35,8 +37,12 @@ export class AddEditComponent {
     }
     
     
-    onSubmit(){
+  onSubmit(){
+
     let formValue=this.formGroup.value;
+
+    if(!this.data){
+
     formValue.birth_date= this.formatDate(formValue.birth_date)
     // console.log('date val is',formValue.birth_date)
    
@@ -52,6 +58,21 @@ export class AddEditComponent {
         }
       })
     }
+    
+  }
+  else{
+    console.log(' in else ')
+    this.mainServ.updateUser(formValue,this.data.id).subscribe({
+      next:()=>{
+        // alert('employee added succsessfully ')
+        console.log('working -- api ')
+      },
+      error:(error)=>{
+        console.log(error)
+      }
+    });
+    this.mainServ.updateData()
+  }
   }
 
   ngOnInit(): void {
@@ -61,11 +82,10 @@ export class AddEditComponent {
       address:'',
       birth_date:'',
       phone:'',
-      education:'',
       email:'',
     })
-    
-    // this.formGroup.patchValue(this.data)
+    console.log('data is ',this.data)
+    this.formGroup.patchValue(this.data)
   }
 
   closeDailog(){
