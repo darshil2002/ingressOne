@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders  } from '@angular/common/http';
 import { BehaviorSubject ,Observable,Subject} from 'rxjs';
 import { user, userMainData } from './common.interface';
 import { pluck } from 'rxjs/operators';
@@ -65,11 +65,31 @@ postEmployee(data:any):Observable<any>{
     formData.append('token', this.authToken);
   }
   console.log('whole form '+ formData)
-  return this.http.post(this.userUrl,formData);
+  return this.http.post<any>(this.userUrl,formData);
 }
+// post meethodd finish
 updateData(){
  
   this.fetchData()
 }
-// post method finish
+
+deleteUser(id:string){
+  console.log('id in service ', id )
+
+  const headers = new HttpHeaders({
+    'Authorization': `Bearer ${this.authToken}`
+  });
+  console.log('============')
+  console.log('headers are ', headers)
+  console.log('============') 
+  const deleteUrl = `${this.userUrl}/${id}`;
+
+  return this.http.delete(deleteUrl,{ headers });
+
+  //Delete not working because of this blocker 
+  // Access to XMLHttpRequest at 'http://test.ultim8e.net/api/clients/18' from origin 'http://localhost:4200' has been blocked by CORS policy: Request header field authorization is not allowed by Access-Control-Allow-Headers in preflight response.
+
+  // need to add proxy or have to change some thing in backEnd
+  // tried to use extenstion which didn't worked 
+}
 }

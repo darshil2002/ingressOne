@@ -42,4 +42,21 @@ export class CrudComponent {
     // this._matDailog.open(AddEditComponent,{data})
     console.log(data)
   }
+  deleteEmpoyee(id:any){
+    console.log('id is ', id )
+    //api/clients/{client}
+
+    this.mainService.deleteUser(id).subscribe(
+      response => {
+        // Handle the success response
+        console.log('Client deleted successfully:', response);
+      },
+      error => {
+        // Handle the error response
+        console.error('Error deleting client:', error);
+      }
+    );
+    this.mainService.updateData()
+
+  }
 }
