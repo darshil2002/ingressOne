@@ -49,14 +49,14 @@ export class MainServiceService {
 // post method 
 postEmployee(data:any):Observable<any>{
   // this.getNewArray()
-  let myTempDate='1993-09-20'
+  // let myTempDate='1993-09-20'
   const formData = new FormData();
 
   // Append key-value pairs for each field in your data
   formData.append('name', data.name);
   formData.append('last_name', data.last_name);
   formData.append('address', data.address);
-  formData.append('birth_date', myTempDate);
+  formData.append('birth_date', data.birth_date);
   formData.append('education', data.education);
   formData.append('email', data.email);
   formData.append('phone', data.phone);

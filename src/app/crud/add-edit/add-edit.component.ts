@@ -17,13 +17,33 @@ export class AddEditComponent {
     ){}
     // @Inject(MAT_DIALOG_DATA) public data: any
 
+    formatDate(inputDate: any) {
+      // console.log('input date is', inputDate);
+    
+      if (inputDate instanceof Date) {
+        const year = inputDate.getFullYear();
+        const month = String(inputDate.getMonth() + 1).padStart(2, '0');
+        const day = String(inputDate.getDate()).padStart(2, '0');
+    
+        const formattedDate = `${year}-${month}-${day}`;
+        // console.log('formatted date is', formattedDate);
+        return formattedDate;
+      } else {
+        // console.error('Invalid inputDatE');
+        return ''; 
+      }
+    }
+    
+    
     onSubmit(){
     let formValue=this.formGroup.value;
-    console.log(' data is +++++', formValue)
+    formValue.birth_date= this.formatDate(formValue.birth_date)
+    // console.log('date val is',formValue.birth_date)
+   
     if(this.formGroup.valid){
       this.mainServ.postEmployee(formValue).subscribe({
         next:()=>{
-          // alert('employee added succsessfully ')
+          // alert('employee added !')
           this._dailogRef.close()
           this.mainServ.updateData()
         },
